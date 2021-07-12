@@ -10,23 +10,57 @@
 </head>
 
 <body>
-  <div class="sign-in-or-sign-out"></div>
+  
+  <!--Clear this form once submitted  -->
+<div class="list-form">
+  <form>      
+    <fieldset>
+      <legend>Choose your interests</legend>
+      <div>
+        <input type="checkbox" id="eggs" name="item" value="eggs">
+        <label for="coding">Eggs</label>
+      </div>
+      <div>
+        <input type="checkbox" id="meat" name="item" value="meat">
+        <label for="music">Meat</label>
+      </div>
+      <div>
+        <input type="checkbox" id="juice" name="item" value="juice">
+        <label for="music">Juice</label>
+      </div>
+    </fieldset>
+    <button id="list-button">Submit</button>    
+</form>
+</div>
+
+<!-- Put the resulting html here -->
+<div class="output font-xl">
+</div>
+
+<div class="sign-in-or-sign-out"></div>
  
   <!-- Put the Firebase config here -->
   <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
-  <!-- Firebase Auth -->
-  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+
+<!-- FirebaseUI Auth -->
+  <!-- https://firebaseopensource.com/projects/firebase/firebaseui-web/ -->
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
 
   <script>
     // Your web app's Firebase configuration
     var firebaseConfig = {} // replace
+    
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
   </script>
-  <script src="dij.js"></script>
-  <script src="index.js"></script>
+
+<script src="index.js"></script>
 </body>
 
 </html>
