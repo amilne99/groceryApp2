@@ -108,6 +108,51 @@ function Dijkstra(roads, source, dest) {
 
   //--------------------------------------------------------------------------------
 
+
+//Listen for page loading event, eventually change this to take an input of what store in the URL and listen for a click
+window.addEventListener('DOMContentLoaded', async function() { 
+  // Build the URL for our items API
+let url = `/.netlify/functions/items`
+
+// Fetch the url, wait for a response, store the response in memory
+let response = await fetch(url)
+console.log(response)
+
+// Ask for the json-formatted data from the response, wait for the data, store it in memory
+let itemsJson = await response.json()
+
+//Establish reference to 
+let itemsFormDiv = document.querySelector(`.item-options`)
+
+for (var i = 0; i < itemsJson.length; i++) {
+
+  itemsFormDiv.insertAdjacentHTML(`beforeend`,`<div><input type="checkbox" id="${itemsJson[i]}" name="item" value="${itemsJson[i]}"> <label for="coding">${itemsJson[i]}</label></div>`)
+  
+  console.log(itemsJson[i])
+}
+})
+
+
+let newpathButton = document.querySelector(`.newpath`)
+
+//Handle if they click on the new roads button, taking them to the page to add
+newpathButton.addEventListener(`click`, function(event) {
+
+  document.location.href = `postPaths.html`
+
+})
+
+
+//Pull firebase database
+
+//For the length of the database, loop through
+
+//Add the from and to to an array
+
+//Post it to console log as a test
+
+
+
 // Set submit button as an object
 let submitButton = document.querySelector(`#list-button`)
 
@@ -120,22 +165,30 @@ submitButton.addEventListener(`click`, async function(event) {
 
   //Setup a blank array
   var array = []
+  //Build an array for categories that correspond to items chosen
+  var categoryArray = []
   //Look for what is checked
   var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-  
-  //Push all those where checked
+  console.log(checkboxes)
+
+  //Run a loop to build a URL that can be used in lambda function to get the corresponding items
+
+
+  //Push all those where checked into an array
   for (var i = 0; i < checkboxes.length; i++) {
     array.push(checkboxes[i].value)
   }
 
   console.log(array)
 
+  
+
     //Run the brain portion with the objects in the array in a for loop
 
   var items = array;
   var order = "<br> start";
-var startPoint = "start";
-var path = [];
+  var startPoint = "start";
+  var path = [];
 
 // document.addEventListener(`DOMContentLoaded`, async function(event) {
 // Build the URL for our roads API

@@ -1,3 +1,5 @@
+//http://localhost:8888/.netlify/functions/roads
+
 //This pulls the roads from firebase in an interpretable format
 
 //allow us to use firebase
@@ -8,8 +10,15 @@ exports.handler = async function(event) {
 	let db = firebase.firestore()
   let returnValue = []
 
+  //
+  //To work on: This will allow user input to pull the store specific info if named right. Could build a collection of store names and what is shown to users
+  //
+  //let test = ""
+  //let combo =  `stores` + test
+  console.log(combo)
     //Ask firebase for documents
-	let roadsQuery = await db.collection(`stores`).get()
+  let roadsQuery = await db.collection(`stores2`).get()
+	// let roadsQuery = await db.collection(`${combo}`).get()
 
     // Get documents from the query
 	let roads = roadsQuery.docs
@@ -27,7 +36,6 @@ exports.handler = async function(event) {
 		
         returnValue.push(roadObject)
 	}
-
 
 return {
     statusCode: 200,

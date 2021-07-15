@@ -9,25 +9,18 @@
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.css" />
 </head>
 
+<!-- Add button to take to new post page -->
 <body>
-  
+  <div class=" ml-2 text-sm newpath">
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold mx-2 my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline sign-out">New Post</button>
+  </div>
   <!--Clear this form once submitted  -->
 <div class="list-form">
   <form>      
-    <fieldset>
-      <legend>Choose your interests</legend>
-      <div>
-        <input type="checkbox" id="eggs" name="item" value="eggs">
-        <label for="coding">Eggs</label>
-      </div>
-      <div>
-        <input type="checkbox" id="meat" name="item" value="meat">
-        <label for="music">Meat</label>
-      </div>
-      <div>
-        <input type="checkbox" id="juice" name="item" value="juice">
-        <label for="music">Juice</label>
-      </div>
+    <!-- Use this for insert adjacent html -->
+    <fieldset class="item-options"> 
+      <legend>Choose your items</legend>
+      <!-- Space for inserting items from chosen store  -->
     </fieldset>
     <button id="list-button">Submit</button>    
 </form>

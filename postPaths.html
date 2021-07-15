@@ -1,0 +1,153 @@
+<!-- This is just a placeholder for now, it's all the wrong content, eventually need ability to enter categories, distances, and items -->
+<!-- This will need a corresponding lambda function to send the info to Firebase, use Set in firebase -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create Post</title>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
+      </head>
+<body>
+  
+    <!-- Put the Firebase config here -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+  <!-- Firebase Auth -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {apiKey: "AIzaSyD5HioxYJ82pfLWaL6Ek484ceIDxNc9Jp0",
+      authDomain: "kiei-451-d1d71.firebaseapp.com",
+      projectId: "kiei-451-d1d71",
+      storageBucket: "kiei-451-d1d71.appspot.com",
+      messagingSenderId: "170317851474",
+      appId: "1:170317851474:web:8a8d2a61b579ff67b6688b"} // replaced with Andrew's key
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  
+  
+  <script src="postInput.js"></script> 
+  <div class="py-8 md:px-16 sm:px-16 px-16  w-full mx-auto bg-opacity-10">
+        <p class="font-bold mt-2 text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500 text-right">Kellogg Marketplace</p>
+        <p class="italic text-right text-m bg-clip-text text-transparent text-gray-500">One-stop shop for all your marketplace needs at Kellogg</p>
+    </div>
+
+    <div class="flex">
+        <div class="lg:w-2/5 bg-gray-400 bg-cover bg-center text-white"
+           style="background-image: url('https://i.ytimg.com/vi/R9mXtzn8meE/maxresdefault.jpg')">
+        </div>
+    <div class="lg:w-3/5 sm:w-full m:w-full ">
+    <form class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+      <!-- <div class="mb-4">
+        <label class="fullname block text-gray-600 text-sm font-semibold mb-2" for="fullname">
+          fullname
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="fullname"
+          type="text"
+          placeholder="enter your name" -->
+        <!-- > -->
+      <div class="mb-4">
+        <label class="category block text-gray-600 text-sm font-semibold mb-2" for="category">
+          Category
+        </label>
+        <input list="typesPostInput" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="typeCreatePost" id="typeCreatePost" placeholder="Select Type">
+        <datalist id="typesPostInput">
+          <option value="Furniture">
+          <option value="Clothing">
+          <option value="Computer">
+          <option value="Vehicles">
+          <option value="Sports">
+          <option value="Art">
+        </datalist>
+      </div>
+      <div class="mb-4">
+        <label class="description block text-gray-600 text-sm font-semibold mb-2" for="description">
+          Description
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="description"
+          type="text"
+          placeholder="Input Description"
+        >
+      </div>
+      <div class="mb-4">
+        <label class="imageURL block text-gray-600 text-sm font-semibold mb-2" for="imageURL">
+          Image URL
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="imageURL"
+          type="text"
+          placeholder="Paste Image URL"
+        >
+      </div>
+      <div class="mb-4">
+        <label class="price block text-gray-600 text-sm font-semibold mb-2" for="price">
+          Price
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="price"
+          type="text"
+          placeholder="Price"
+        >
+      </div>
+      <div class="mb-4">
+        <label class="brand block text-gray-600 text-sm font-semibold mb-2" for="brand">
+          Brand
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="brand"
+          type="text"
+          placeholder="Input Brand"
+        >
+      </div>
+      <div class="mb-4">
+        <label class="delivery block text-gray-600 text-sm font-semibold mb-2" for="delivery">
+          Delivery Available?
+        </label>
+        <input list="deliveryPostInput" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="deliveryCreatePost" id="deliveryCreatePost" placeholder="Yes/No">
+        <datalist id="deliveryPostInput">
+          <option value="Yes">
+          <option value="No">
+        </datalist>
+      </div>
+      <div class="mb-4">
+        <label class="condition block text-gray-600 text-sm font-semibold mb-2" for="condition">
+          Condition
+        </label>
+        <input list="conditionsPostInput" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="conditionCreatePost" id="conditionCreatePost" placeholder="Select Condition">
+        <datalist id="conditionsPostInput">
+          <option value="Brand New">
+          <option value="Lightly Used">
+          <option value="Moderate Use">
+          <option value="Heavily Used">
+        </datalist>
+      </div>
+      
+
+      
+          <div class="flex items-center justify-between">
+        <button class="createPost bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          Create post
+        </button>
+        <a href="index.html" class="no-underline text-right text-indigo-500 font-bold hover:text-indigo-400">Main Page</a></p>
+        
+      </div>
+    </form>
+
+  </div>
+    </div>
+
+</body>
+</html>
