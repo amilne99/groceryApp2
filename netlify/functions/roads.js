@@ -15,7 +15,7 @@ exports.handler = async function(event) {
   //
   //let test = ""
   //let combo =  `stores` + test
-  console.log(combo)
+  //console.log(combo)
     //Ask firebase for documents
   let roadsQuery = await db.collection(`stores2`).get()
 	// let roadsQuery = await db.collection(`${combo}`).get()

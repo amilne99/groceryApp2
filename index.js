@@ -106,6 +106,12 @@ function Dijkstra(roads, source, dest) {
     }
   }
 
+  //Unique values only
+
+  const unique = (value, index, self) => {
+    return self.indexOf(value) === index
+  }
+
   //--------------------------------------------------------------------------------
 
 
@@ -126,7 +132,7 @@ let itemsFormDiv = document.querySelector(`.item-options`)
 
 for (var i = 0; i < itemsJson.length; i++) {
 
-  itemsFormDiv.insertAdjacentHTML(`beforeend`,`<div><input type="checkbox" id="${itemsJson[i]}" name="item" value="${itemsJson[i]}"> <label for="coding">${itemsJson[i]}</label></div>`)
+  itemsFormDiv.insertAdjacentHTML(`beforeend`,`<div class="text-base font-normal px-2"><input type="checkbox" id="${itemsJson[i].item}" name="item" value="${itemsJson[i].item}"> <label for="coding">${itemsJson[i].item}</label></div>`)
   
   console.log(itemsJson[i])
 }
@@ -164,44 +170,61 @@ submitButton.addEventListener(`click`, async function(event) {
   //Process information input into array
 
   //Setup a blank array
-  var array = []
-  //Build an array for categories that correspond to items chosen
-  var categoryArray = []
+  var itemArray = []
+  
   //Look for what is checked
   var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-  console.log(checkboxes)
 
   //Run a loop to build a URL that can be used in lambda function to get the corresponding items
 
-
   //Push all those where checked into an array
   for (var i = 0; i < checkboxes.length; i++) {
-    array.push(checkboxes[i].value)
+    itemArray.push(checkboxes[i].value)
   }
-
-  console.log(array)
-
+  //Build the Url for our API for getting categories
+  let catUrl = `/.netlify/functions/categories?items=${itemArray}`  
+  //This looks good, console.log(`this is array ${itemArray}`)
+  console.log(catUrl)
   
+  // Fetch the url, wait for a response, store the response in memory
+  let itemsResponse = await fetch(catUrl)
+
+  // Ask for the json-formatted data from the response, wait for the data, store it in memory
+  let itemsJson = await itemsResponse.json()
+
+  // Write the json-formatted data to the console in Chrome
+  console.log(itemsJson)
+
+  let itemsList = []
+  let categoriesList = []
+  //Add all the items to their respective lists
+  for (let i=0;i<itemsJson.length; i++) {
+    itemsList.push(itemsJson[i].item)
+    categoriesList.push(itemsJson[i].category)
+
+  }
+  //Remove duplicates
+  categoriesList = categoriesList.filter(unique)
+
+  console.log(`items list is ${itemsList}`)
+  console.log(categoriesList)
 
     //Run the brain portion with the objects in the array in a for loop
-
-  var items = array;
-  var order = "<br> start";
-  var startPoint = "start";
-  var path = [];
+  //Roads and itmes are now at category level
+ 
 
 // document.addEventListener(`DOMContentLoaded`, async function(event) {
 // Build the URL for our roads API
 let url = `/.netlify/functions/roads`
 
 // Fetch the url, wait for a response, store the response in memory
-let response = await fetch(url)
+let roadsResponse = await fetch(url)
 
 // Ask for the json-formatted data from the response, wait for the data, store it in memory
-let json = await response.json()
+let json = await roadsResponse.json()
 
 // Write the json-formatted data to the console in Chrome
-//console.log(json)
+console.log(json)
 
 //Loop through json
 for (let i=0;i<json.length; i++) {
@@ -211,60 +234,73 @@ for (let i=0;i<json.length; i++) {
     // console.log(json[i].distance)
 }
 
-// makeRoad("start", "apple", 1)
-// makeRoad("start", "eggs", 2)
-// makeRoad("start", "nuts", 2)
-// makeRoad("start", "end", 1)
-// makeRoad("meat", "eggs", 1)
-// makeRoad("meat", "juice", 2)
-// makeRoad("apple", "meat", 1)
-// makeRoad("eggs", "juice", 1.7)
-// makeRoad("eggs",  "end", 1)
-// makeRoad("eggs", "nuts", 2)
-// makeRoad("juice", "nuts", 1);
-// makeRoad("nuts", "end", 1);
+var destinations = categoriesList;
+var order = "<br> start";
+//Establish start point
+var startPoint = "start";
+//Blank for path
+var path = [];
+var counter = 1;
 
-while ( items.length > 0){
+while ( destinations.length > 0){
 //For each item on the list, set a minimum distance that is quite high so you can try to beat it
 	var minDist = 100;
 	var ClosestItem;
   var ClosestPath;
-
-	for(i=0 ; i<items.length ; i++){
-		// Check is the dijstra to the next item is closer, if so update it
-    var values = Dijkstra(roads, startPoint, items[i]);
-    
+  
+  //This sub loop checks all for the closest and constantly updates
+	for(i=0 ; i<destinations.length ; i++){
+		
+    var values = Dijkstra(roads, startPoint, destinations[i]);
+  
     var DijkstraDistance = values[0];
     var DijsktraPath = values[1];
-    console.log(values);
+    //console.log(values);
 
 		if(DijkstraDistance < minDist){
 			minDist = DijkstraDistance;
-      console.log(minDist);
-			ClosestItem = items[i];
+      //console.log(minDist);
+			ClosestItem = destinations[i];
       ClosestPath = DijsktraPath;
-      console.log(`closest path is ${ClosestPath}`)
+      //console.log(`closest path is ${ClosestPath}`)
 		}
-		//console.log(items)
+		//console.log(destinations)
 	}
 
 	// Update the start point to be the item you chose to go to and repeat the next step
 	startPoint = ClosestItem;
-
+  console.log(startPoint)
 	//adding to the path
-	order += " --> " + startPoint + " (via " + ClosestPath +") <br>";
+	order +=  " --> <br> " + `<em>${counter}<em>)`+ startPoint +"(";
+  //" (via " + ClosestPath +") <br>"
   // path += "(via" + ClosestPath;
 	//deleteing the item from the array so you don't check it again
-	var index = items.indexOf(ClosestItem);
+	var index = destinations.indexOf(ClosestItem);
+  counter += 1;
+
+  //Check which items are being hit
+  for (j=0; j<itemsJson.length;j++){
+    //If the category matches the destination
+
+    //This is working now just need it to splice the list (not necessary for now) and add the items in parentheses so it's category (item, item)-> category (item, item)
+    if (itemsJson[j].category==ClosestItem){
+      //console.log(itemsJson[j].item)
+      //console.log(itemsJson[j].category)
+      order += itemsJson[j].item + ", "
+    }
+  }
+  order = order.slice(0, -2)
+  order += ")"
+
 	if (index > -1) {
-   		items.splice(index, 1);
+   		destinations.splice(index, 1);
 	}
 	//console.log(items);
 
 }
 //This is the final output
-console.log(order)
-console.log(path)
+//console.log(order)
+//console.log(path)
 
   let formdiv = document.querySelector(`.list-form`)
     
@@ -272,7 +308,7 @@ console.log(path)
 
   let outputdiv = document.querySelector(`.output`)
 
-  outputdiv.insertAdjacentHTML(`beforeend`,`this is what you should do: ${order} <br>  and ${path} `)
+  outputdiv.insertAdjacentHTML(`beforeend`,`this is what you should do: ${order} <br>`)
 })
 // Listen for the submit button click
 

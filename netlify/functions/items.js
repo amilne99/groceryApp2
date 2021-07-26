@@ -30,7 +30,7 @@ let returnValue = []
 //Query items
 
 //Updated to pull from categories items now
-let itemsQuery = await db.collection(`categories`).get()
+let itemsQuery = await db.collection(`categories`).orderBy('item').get()
 
 let items = itemsQuery.docs
 
@@ -39,7 +39,12 @@ for (let i=0;i< items.length; i++) {
     let itemData = items[i].data()
     
     //Updated to pull from categories items now
-    returnValue.push(itemData.item)
+
+    let itemObject = {
+      item: itemData.item,
+      category: itemData.category
+    }
+    returnValue.push(itemObject)
     //returnValue.push(itemData.from)
     //returnValue.push(itemData.to)
 }

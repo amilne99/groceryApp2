@@ -32,17 +32,17 @@
   </script>
   
   
-  <script src="postInput.js"></script> 
+  
   <div class="py-8 md:px-16 sm:px-16 px-16  w-full mx-auto bg-opacity-10">
         <p class="font-bold mt-2 text-2xl bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500 text-right">Kellogg Marketplace</p>
         <p class="italic text-right text-m bg-clip-text text-transparent text-gray-500">One-stop shop for all your marketplace needs at Kellogg</p>
     </div>
-
+    <div class="completed-entry text-m font-bold"></div>
     <div class="flex">
-        <div class="lg:w-2/5 bg-gray-400 bg-cover bg-center text-white"
+        <div class="bg-gray-400 bg-cover bg-center text-white"
            style="background-image: url('https://i.ytimg.com/vi/R9mXtzn8meE/maxresdefault.jpg')">
         </div>
-    <div class="lg:w-3/5 sm:w-full m:w-full ">
+    <div class="lg:w-1/2 sm:w-full m:w-full ">
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4">
       <!-- <div class="mb-4">
         <label class="fullname block text-gray-600 text-sm font-semibold mb-2" for="fullname">
@@ -58,96 +58,136 @@
         <label class="category block text-gray-600 text-sm font-semibold mb-2" for="category">
           Category
         </label>
-        <input list="typesPostInput" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="typeCreatePost" id="typeCreatePost" placeholder="Select Type">
-        <datalist id="typesPostInput">
-          <option value="Furniture">
-          <option value="Clothing">
-          <option value="Computer">
-          <option value="Vehicles">
-          <option value="Sports">
-          <option value="Art">
+        <input list="categoryOptions" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="categoryOptions" id="categoryEntry" placeholder="Enter Category">
+        <datalist id ="categoryOptions">
+          
         </datalist>
+        <!-- Eventually we could pull the category list here so it is only current categories listed -->
       </div>
-      <div class="mb-4">
-        <label class="description block text-gray-600 text-sm font-semibold mb-2" for="description">
-          Description
-        </label>
-        <input
-          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="description"
-          type="text"
-          placeholder="Input Description"
-        >
-      </div>
-      <div class="mb-4">
-        <label class="imageURL block text-gray-600 text-sm font-semibold mb-2" for="imageURL">
-          Image URL
-        </label>
-        <input
-          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="imageURL"
-          type="text"
-          placeholder="Paste Image URL"
-        >
-      </div>
-      <div class="mb-4">
-        <label class="price block text-gray-600 text-sm font-semibold mb-2" for="price">
-          Price
-        </label>
-        <input
-          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="price"
-          type="text"
-          placeholder="Price"
-        >
-      </div>
-      <div class="mb-4">
-        <label class="brand block text-gray-600 text-sm font-semibold mb-2" for="brand">
-          Brand
-        </label>
-        <input
-          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="brand"
-          type="text"
-          placeholder="Input Brand"
-        >
-      </div>
-      <div class="mb-4">
-        <label class="delivery block text-gray-600 text-sm font-semibold mb-2" for="delivery">
-          Delivery Available?
-        </label>
-        <input list="deliveryPostInput" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="deliveryCreatePost" id="deliveryCreatePost" placeholder="Yes/No">
-        <datalist id="deliveryPostInput">
-          <option value="Yes">
-          <option value="No">
-        </datalist>
-      </div>
-      <div class="mb-4">
-        <label class="condition block text-gray-600 text-sm font-semibold mb-2" for="condition">
-          Condition
-        </label>
-        <input list="conditionsPostInput" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="conditionCreatePost" id="conditionCreatePost" placeholder="Select Condition">
-        <datalist id="conditionsPostInput">
-          <option value="Brand New">
-          <option value="Lightly Used">
-          <option value="Moderate Use">
-          <option value="Heavily Used">
-        </datalist>
-      </div>
-      
 
+
+      <div class="mb-4">
+        <label class="item1 block text-gray-600 text-sm font-semibold mb-2" for="item1">
+          Item 1
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="item1"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="item2 block text-gray-600 text-sm font-semibold mb-2" for="item2">
+          Item 2
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="item2"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="item3 block text-gray-600 text-sm font-semibold mb-2" for="item3">
+          Item 3
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="item3"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="item4 block text-gray-600 text-sm font-semibold mb-2" for="item4">
+          Item 4
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="item4"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="item5 block text-gray-600 text-sm font-semibold mb-2" for="item5">
+          Item 5
+        </label>
+        <input
+          class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="item5"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
       
           <div class="flex items-center justify-between">
-        <button class="createPost bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-          Create post
+        <button id="create-items-button" class="create-item bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          Submit Items
         </button>
         <a href="index.html" class="no-underline text-right text-indigo-500 font-bold hover:text-indigo-400">Main Page</a></p>
         
       </div>
     </form>
 
-  </div>
+    
     </div>
 
+    <div class="lg:w-1/2 sm:w-full m:w-full ">
+      <form class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+        <!-- <div class="mb-4">
+          <label class="fullname block text-gray-600 text-sm font-semibold mb-2" for="fullname">
+            fullname
+          </label>
+          <input
+            class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="fullname"
+            type="text"
+            placeholder="enter your name" -->
+          <!-- > -->
+        <div class="mb-4">
+          <label class="fromCategory block text-gray-600 text-sm font-semibold mb-2" for="fromCategory">
+            From
+          </label>
+          <input list="fromCategoryOptions" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="fromCategoryOptions" id="fromCategoryEntry" placeholder="Enter Category">
+          <datalist id ="fromCategoryOptions">
+            
+          </datalist>
+          <!-- Eventually we could pull the category list here so it is only current categories listed -->
+        </div>
+  
+  
+        <div class="mb-4">
+          <label class="toCategory block text-gray-600 text-sm font-semibold mb-2" for="toCategory">
+            To
+          </label>
+          <input list="toCategoryOptions" class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="toCategoryOptions" id="toCategoryEntry" placeholder="Enter Category">
+          <datalist id ="toCategoryOptions">
+            
+          </datalist>
+          <!-- Eventually we could pull the category list here so it is only current categories listed -->
+        </div>
+
+        <div class="mb-4">
+          <label class="roadDistance block text-gray-600 text-sm font-semibold mb-2" for="roadDistance">
+            Distance
+          </label>
+          <input
+            class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="roadDistance"
+            type="number"
+            placeholder="roadDistance"
+          >
+        </div>
+  
+
+      </form>
+    </div>
+    <script src="postPaths.js"></script> 
 </body>
 </html>
