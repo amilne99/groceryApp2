@@ -80,9 +80,9 @@ submitButton.addEventListener(`click`, async function(event) {
 
   let completeddiv = document.querySelector(`.completed-entry`)
 
-  //location.reload()
+  setTimeout(location.reload.bind(location), 4000)
 
-  completeddiv.insertAdjacentHTML(`beforeend`,`Thanks for entering your info, feel free to return to the main page to shop for groceries or to enter more info`)
+  completeddiv.insertAdjacentHTML(`beforeend`,`Success! Thanks for submitting your info. The page will refresh now.`)
   //This isn't quite working. Maybe just wipe the html and add links to main page or to refresh this page? 
 
 })

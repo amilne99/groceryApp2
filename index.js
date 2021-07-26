@@ -235,7 +235,7 @@ for (let i=0;i<json.length; i++) {
 }
 
 var destinations = categoriesList;
-var order = "<br> start";
+var order = "<br>";
 //Establish start point
 var startPoint = "start";
 //Blank for path
@@ -271,7 +271,7 @@ while ( destinations.length > 0){
 	startPoint = ClosestItem;
   console.log(startPoint)
 	//adding to the path
-	order +=  " --> <br> " + `<em>${counter}<em>)`+ startPoint +"(";
+	order +=  `<strong> ${counter}) `+ startPoint +`</strong> (`;
   //" (via " + ClosestPath +") <br>"
   // path += "(via" + ClosestPath;
 	//deleteing the item from the array so you don't check it again
@@ -290,7 +290,7 @@ while ( destinations.length > 0){
     }
   }
   order = order.slice(0, -2)
-  order += ")"
+  order += ") <br>"
 
 	if (index > -1) {
    		destinations.splice(index, 1);
@@ -302,13 +302,25 @@ while ( destinations.length > 0){
 //console.log(order)
 //console.log(path)
 
+  let refreshdiv = document.querySelector(`.refreshpage`)
+
+  refreshdiv.insertAdjacentHTML(`beforeend`,`<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-base mx-2 my-2 py-3 px-5 rounded focus:outline-none focus:shadow-outline">Return to Home</button>`)
+
   let formdiv = document.querySelector(`.list-form`)
     
   formdiv.innerHTML = `<div> </div>`
 
   let outputdiv = document.querySelector(`.output`)
 
-  outputdiv.insertAdjacentHTML(`beforeend`,`this is what you should do: ${order} <br>`)
+  outputdiv.insertAdjacentHTML(`beforeend`,`Here is your smart shopping path: ${order} <br>`)
+})
+
+let refreshButton = document.querySelector(`.refreshpage`)
+
+refreshButton.addEventListener(`click`, function(event) {
+
+  location.reload()
+
 })
 // Listen for the submit button click
 
