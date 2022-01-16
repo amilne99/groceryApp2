@@ -138,6 +138,15 @@ for (var i = 0; i < itemsJson.length; i++) {
 }
 })
 
+//Look for the search bar here
+let searchBar = document.querySelector(`#searchBar`)
+
+//Listen for event with search bar
+searchBar.addEventListener('keyup', function(event){
+  console.log(event.target.value)
+  let searchContent = event.target.value.toLowerCase()
+  
+})
 
 let newpathButton = document.querySelector(`.newpath`)
 
@@ -149,18 +158,10 @@ newpathButton.addEventListener(`click`, function(event) {
 })
 
 
-//Pull firebase database
-
-//For the length of the database, loop through
-
-//Add the from and to to an array
-
-//Post it to console log as a test
-
-
-
 // Set submit button as an object
 let submitButton = document.querySelector(`#list-button`)
+
+//
 
 // Listen for the click
 submitButton.addEventListener(`click`, async function(event) {
