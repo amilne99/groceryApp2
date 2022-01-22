@@ -7,6 +7,10 @@
   <title>SmartMart</title>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
+  <style>
+    /*  LIST - hide those that we don't want*/
+    #item-options label.hide {display:none; }
+  </style>
 </head>
 
 <!-- Add button to take to new post page -->
@@ -37,6 +41,10 @@
     <!-- Use this for insert adjacent html -->
     <fieldset class="item-options flex-col items-center text-left"> 
       <legend class="text-lg font-bold p-2">Choose your items:</legend>
+      <div id = "item-options">
+
+      </div>
+
       <!-- Space for inserting items from chosen store  -->
     </fieldset>
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-base mx-2 my-2 py-3 px-5 rounded focus:outline-none focus:shadow-outline" id="list-button">Submit</button>    

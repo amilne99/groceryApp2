@@ -128,11 +128,14 @@ console.log(response)
 let itemsJson = await response.json()
 
 //Establish reference to 
-let itemsFormDiv = document.querySelector(`.item-options`)
+let itemsFormDiv = document.querySelector(`#item-options`)
+
+
+
 
 for (var i = 0; i < itemsJson.length; i++) {
 
-  itemsFormDiv.insertAdjacentHTML(`beforeend`,`<div class="text-base font-normal px-2"><input type="checkbox" id="${itemsJson[i].item}" name="item" value="${itemsJson[i].item}"> <label for="coding">${itemsJson[i].item}</label></div>`)
+  itemsFormDiv.insertAdjacentHTML(`beforeend`,`<div class="text-base font-normal px-2"><input type="checkbox" id="${itemsJson[i].item}" name="item" value="${itemsJson[i].item}"> <label>${itemsJson[i].item}</label></div>`)
   
   console.log(itemsJson[i])
 }
@@ -145,8 +148,33 @@ let searchBar = document.querySelector(`#searchBar`)
 searchBar.addEventListener('keyup', function(event){
   console.log(event.target.value)
   let searchContent = event.target.value.toLowerCase()
+  //get the full list of items from the sections
+  let itemListMaster = document.querySelector("#item-options");
+  //get specific items by accessing the label
+  let itemListNew = itemListMaster.getElementsByTagName("label")
+  let itemListCore = itemListMaster.getElementsByTagName("div")
+  console.log(searchContent)
+ // console.log(itemListNew[0].innerHTML)//This gives a specific item (the first on the list)
+  console.log(itemListNew[0].innerHTML.toLowerCase())
+  //Test out hiding something
+  //itemListCore[5].style.display ="none"
+  //itemListNew[8].style.display ="none"
+
+
+  //Loop through all the items
+  for (i = 0; i < itemListNew.length; i++){
+  a = itemListNew[i].innerHTML
+  txtValue = a.textContent || a.innerText
+
+  console.log(txtValue)
+  if (a.indexOf(searchContent)== -1)  {itemListCore[i].style.display = "none"} else {itemListCore[i].style.display =""}
+  }
+  //   //Hide those that don't match the search criteria (with lower case)
+  // }
   
 })
+
+
 
 let newpathButton = document.querySelector(`.newpath`)
 
