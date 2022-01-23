@@ -1,3 +1,5 @@
+
+
 {
   "name": "final",
   "version": "1.0.0",
@@ -5,10 +7,6 @@
   "scripts": {},
   "author": "",
   "dependencies": {
-    "firebase": "^8.2.0",
-    "req": "^0.1.4"
-  },
-  "devDependencies": {
-    "netlify-cli": "^8.9.8"
+    "firebase": "^8.2.0"
   }
 }
