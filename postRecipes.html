@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create Post</title>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
+      </head>
+
+      <style>
+         .categoryLabel {
+            font-size: large;
+            color: black;
+
+         } 
+
+         .inputBox {
+             font-size: medium;
+             background-color: rgb(248, 246, 246);
+             padding: 3px;
+             display: block;
+             border: 2px solid darkgray;
+             border-radius:4px;
+             width: 75%
+             ;
+         }
+
+        .button {
+            background-color: rgb(79, 79, 235) ;
+            color: white;
+            font: bold;
+            padding: 15px;
+            border-radius: 4px;
+        
+        }
+        .button:hover{
+            background-color: rgb(20, 20, 230);
+        }
+
+      </style>
+  
+    <!-- Put the Firebase config here -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+  <!-- Firebase Auth -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {apiKey: "AIzaSyD5HioxYJ82pfLWaL6Ek484ceIDxNc9Jp0",
+      authDomain: "kiei-451-d1d71.firebaseapp.com",
+      projectId: "kiei-451-d1d71",
+      storageBucket: "kiei-451-d1d71.appspot.com",
+      messagingSenderId: "170317851474",
+      appId: "1:170317851474:web:8a8d2a61b579ff67b6688b"} // replaced with Andrew's key
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  
+  
+  <!-- Title section -->
+  <div class="py-8 md:px-16 sm:px-16 px-16  w-full mx-auto bg-opacity-10">
+        <p class="font-bold mt-2 text-2xl bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-blue-500 text-center">SmartMart</p>
+        <p class="italic text-center text-m bg-clip-text text-transparent text-gray-500">Your grocery shopping assistant</p>
+    </div>
+    <div class="px-4 completed-entry text-m font-bold px"></div>
+    <div class="flex">
+       
+    <div class="lg:w-1/2 sm:w-full m:w-full ">
+    <form class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+    
+      <div class="mb-4">
+        <label class="categoryLabel" for="category">
+          Recipe
+        </label>
+        <input list="" class="inputBox recipeInput" name="" id="recipeInput" placeholder="Enter Category">
+        
+        <!-- Eventually we could pull the category list here so it is only current categories listed -->
+      </div>
+
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item1">
+          Item 1
+        </label>
+        <!-- Adding this directly in to check -->
+        <select name="item1" id="item1">
+        
+        </select>
+        <!-- Type was previously text -->
+        <!-- <input
+          class="inputBox"
+          id="item1"
+          type="submit" 
+          placeholder="Item"
+        > -->
+      </div>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item2">
+          Item 2
+        </label>
+        <select name="item2" id="item2">
+        
+        </select>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item3">
+          Item 3
+        </label>
+        <input
+        class="inputBox"
+          id="item3"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item4">
+          Item 4
+        </label>
+        <input
+          class="inputBox"
+          id="item4"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item5">
+          Item 5
+        </label>
+        <input
+          class="inputBox"
+          id="item5"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item6">
+          Item 6
+        </label>
+        <input
+          class="inputBox"
+          id="item6"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item7">
+          Item 7
+        </label>
+        <input
+        class="inputBox"
+          id="item7"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item8">
+          Item 8
+        </label>
+        <input
+        class="inputBox"
+          id="item8"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item9">
+          Item 9
+        </label>
+        <input
+          class="inputBox"
+          id="item9"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="categoryLabel" for="item10">
+          Item 10
+        </label>
+        <input
+          class="inputBox"
+          id="item10"
+          type="text"
+          placeholder="Item"
+        >
+      </div>
+      
+    <div class="flex items-center justify-between">
+        <button id="create-recipe-button" class="button submitButton" type="button">
+          Submit Recipe
+        </button>
+        <a href="index.html" class="button">Return to Home</a></p>
+        
+      </div>
+    </form>
+
+    
+    </div>
+
+    <script src="postRecipes.js"></script> 
+</body>
+</html>
