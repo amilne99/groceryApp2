@@ -186,7 +186,7 @@ let submitButton = document.querySelector(`#list-button`)
 
 //
 
-// Listen for the click
+// Listen for the click, take all the items, send them to Categories.js, get back the list of categories, remove duplicates and proceed
 submitButton.addEventListener(`click`, async function(event) {
   // ignore the default behavior
   event.preventDefault()
