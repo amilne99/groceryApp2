@@ -18,48 +18,23 @@ exports.handler = async function(event) {
 
     let db = firebase.firestore()
 
-    if (category!=undefined && category.length!=0 && item1 !=undefined && item1.length !=0) {
-        await db.collection(`categories`).add({
-            category: category,
-            item: item1
-        })
-    }
-    if (category!=undefined && category.length!=0 && item2 !=undefined && item2.length !=0) {
-        await db.collection(`categories`).add({
-            category: category,
-            item: item2
-        })
-    }
-
-    if (category!=undefined && category.length!=0 && item3 !=undefined && item3.length !=0) {
-        await db.collection(`categories`).add({
-            category: category,
-            item: item3
+    if (recipe!=undefined && recipe.length!=0 && item1 !=undefined && item1.length !=0) {
+        await db.collection(`recipes`).add({
+            recipe: recipe,
+            item1: item1,
+            item2: item2,
+            item3: item3,
+            item4: item4,
+            item5: item5,
+            item6: item6,
+            item7: item7,
+            item8: item8,
+            item9: item9,
+            item10: item10
         })
     }
 
-    if (category!=undefined && category.length!=0 && item4 !=undefined && item4.length !=0) {
-        await db.collection(`categories`).add({
-            category: category,
-            item: item4
-        })
-    }
 
-    if (category!=undefined && category.length!=0 && item5 !=undefined && item5.length !=0) {
-        await db.collection(`categories`).add({
-            category: category,
-            item: item5
-        })
-    }
-
-    if (categoryFrom != undefined && categoryTo != undefined && distance != undefined  && categoryFrom.length != 0 && categoryTo.length != 0 && distance.le != 0){
-        await db.collection(`stores2`).add({
-            distance: parseFloat(distance),
-            from: categoryFrom,
-            to: categoryTo
-        })
-
-    }
 
   return {
     statusCode: 200,

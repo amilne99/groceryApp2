@@ -139,7 +139,42 @@ for (var i = 0; i < itemsJson.length; i++) {
   
   console.log(itemsJson[i])
 }
+
+let urlRecipe = `/.netlify/functions/recipes`
+
+// Fetch the url, wait for a response, store the response in memory
+let responseRecipe = await fetch(urlRecipe)
+console.log(responseRecipe)
+
+// Ask for the json-formatted data from the response, wait for the data, store it in memory
+let recipesJson = await responseRecipe.json()
+
+//Establish reference to div to post to
+let recipesFormDiv = document.querySelector(`#recipe-options`)
+
+
+for (var i = 0; i < recipesJson.length; i++) {
+
+  recipesFormDiv.insertAdjacentHTML(`beforeend`,`<div class="text-base font-normal px-2"><input type="checkbox" id="${recipesJson[i].recipeName}" name="item" value="${recipesJson[i].recipeName}"> <label>${recipesJson[i].recipeDisplay}</label></div>`)
+  
+  console.log(recipesJson[i])
+}
+
 })
+
+//Add in recipes now
+
+  // Build the URL for our items API
+
+  
+  
+
+
+
+
+
+
+// End of space for adding recipes
 
 //Look for the search bar here
 let searchBar = document.querySelector(`#searchBar`)

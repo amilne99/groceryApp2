@@ -20,20 +20,18 @@ console.log(response)
 // Ask for the json-formatted data from the response, wait for the data, store it in memory
 let itemsJson = await response.json()
 
-//FIX THIS HARDCODED j
-for (var j=1; j<10;j++){
-//Establish reference to 
+//FIX THIS HARDCODED
+for (var j=1; j<=10;j++){
+//Establish reference to the 
 let itemsOptionDiv = document.querySelector(`#item${j}`)
 
+//Loop through all the items and add them as dropdown option
 console.log(itemsOptionDiv)
 itemsOptionDiv.insertAdjacentHTML(`beforeend`, `<option value="" disabled selected hidden>Please Choose...</option>`)
 for (var i = 0; i < itemsJson.length; i++) {
   itemsOptionDiv.insertAdjacentHTML(`beforeend`, `<option value="${itemsJson[i].item}">${itemsJson[i].item}</option>`)
-  
-  console.log(itemsJson[i])
+  //console.log(itemsJson[i])
 }}
-
-
 
 
 // Listen for the click
@@ -68,7 +66,9 @@ submitButton.addEventListener(`click`, async function(event) {
   let item9= item9Input.value
   let item10= item10Input.value
 
-  let url = `/.netlify/functions/createRecipe?category=${recipe}&item1=${item1}&item2=${item2}&item3=${item3}&item4=${item4}&item5=${item5}&item6=${item6}&item7=${item7}&item8=${item8}&item9=${item9}&item10=${item10}`
+  console.log(item9Input.value)
+
+  let url = `/.netlify/functions/createRecipe?recipe=${recipe}&item1=${item1}&item2=${item2}&item3=${item3}&item4=${item4}&item5=${item5}&item6=${item6}&item7=${item7}&item8=${item8}&item9=${item9}&item10=${item10}`
     console.log(url)
   let response = await fetch(url)
 
