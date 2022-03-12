@@ -135,7 +135,10 @@ let itemsFormDiv = document.querySelector(`#item-options`)
 
 for (var i = 0; i < itemsJson.length; i++) {
 
-  itemsFormDiv.insertAdjacentHTML(`beforeend`,`<div class="text-base font-normal px-2"><input type="checkbox" id="${itemsJson[i].item}" name="item" value="${itemsJson[i].item}"> <label>${itemsJson[i].item}</label></div>`)
+  itemsFormDiv.insertAdjacentHTML(`beforeend`,
+  `<div class="text-base font-normal px-2">
+  <input type="checkbox" class="item-checkbox" id="${itemsJson[i].item}" name="item" value="${itemsJson[i].item}"> 
+  <label>${itemsJson[i].item}</label></div>`)
   
   console.log(itemsJson[i])
 }
@@ -155,7 +158,11 @@ let recipesFormDiv = document.querySelector(`#recipe-options`)
 
 for (var i = 0; i < recipesJson.length; i++) {
 
-  recipesFormDiv.insertAdjacentHTML(`beforeend`,`<div class="text-base font-normal px-2"><input type="checkbox" id="${recipesJson[i].recipeName}" name="item" value="${recipesJson[i].recipeName}"> <label>${recipesJson[i].recipeDisplay}</label></div>`)
+  recipesFormDiv.insertAdjacentHTML(`beforeend`,
+  `<div class="text-base font-normal px-2">
+  <input type="checkbox" class="recipe-checkbox" id="${recipesJson[i].recipeName}" name="item" value="${recipesJson[i].recipeName}"> 
+  <label>${recipesJson[i].recipeDisplay}</label>
+  </div>`)
   
   console.log(recipesJson[i])
 }
@@ -228,17 +235,72 @@ submitButton.addEventListener(`click`, async function(event) {
 
   //Process information input into array
 
-  //Setup a blank array
-  var itemArray = []
+ 
   
-  //Look for what is checked
-  var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
-  //Run a loop to build a URL that can be used in lambda function to get the corresponding items
+
+
+
+
+
+
+
+
+
+
+  //Look for what is checked
+  //var mainNode = document.querySelectorAll(`.item-options`)
+  //console.log(mainNode)
+  var itemCheckboxes = document.querySelectorAll(`input.item-checkbox:checked`)
+  console.log(itemCheckboxes)
+  var recipeCheckboxes = document.querySelectorAll(`input.recipe-checkbox:checked`)
+  console.log(recipeCheckboxes)
+  //var itemCheckboxes = checkboxes.querySelectorAll(`.item-options`)
+  //console.log(itemCheckboxes)
+
+  //For recipe Checkboxes need to send those selected to an API that returns all those items that are included in that recipe
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   //Setup blank arrays
+  var itemArray = []
+  var recipeArray = []
+
+  //Run a loop to build a URL that can be used in recipe lambda function to get the corresponding items
+  for (var h = 0; h < recipeCheckboxes.length; h++) {
+    recipeArray.push(recipeCheckboxes[h].value)
+  }
+
+  //Build the URL and check it
+  let recUrl = `/.netlify/functions/recipeItems?recipes=${recipeArray}`
+  console.log(recUrl)
+
+  //Get the json response of items from the URL 
+  let recipesItemsResponse = await fetch(recUrl)
+  let recipesItemsJson = await recipesItemsResponse.json()
+  console.log(`check`)
+  console.log(recipesItemsJson)
+  console.log('check2')
+  console.log(recipesItemsJson[0])
+
+  for (var k = 0; k < recipesItemsJson.length; k++) {
+    itemArray.push(recipesItemsJson[k])
+  }
+
 
   //Push all those where checked into an array
-  for (var i = 0; i < checkboxes.length; i++) {
-    itemArray.push(checkboxes[i].value)
+  for (var i = 0; i < itemCheckboxes.length; i++) {
+    itemArray.push(itemCheckboxes[i].value)
   }
   //Build the Url for our API for getting categories
   let catUrl = `/.netlify/functions/categories?items=${itemArray}`  
@@ -253,6 +315,7 @@ submitButton.addEventListener(`click`, async function(event) {
 
   // Write the json-formatted data to the console in Chrome
   console.log(itemsJson)
+  
 
   let itemsList = []
   let categoriesList = []
