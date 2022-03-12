@@ -10,7 +10,6 @@ const unique = (value, index, self) => {
 
 //Remove a value from an array
 function arrayRemove(arr, value) { 
-    
     return arr.filter(function(ele){ 
         return ele != value; 
     });
