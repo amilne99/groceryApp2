@@ -29,6 +29,21 @@
     border: 2.5px solid #009688;
     background-color: white;
     }
+
+    .button {
+      background-color: #006eff;
+      font-size: 16px;
+      padding: 12px 28px;
+      border-radius: 4px;
+      width: 20%;
+      display:block;
+      color: white;
+      margin: 6px 4px
+    }
+    
+    .button:hover{
+      background-color: #1b25b4;
+    }
     
   </style>
 </head>
@@ -40,7 +55,10 @@
     <span class="italic text-center text-m bg-clip-text text-transparent text-gray-500">Your grocery shopping assistant</span>
   </div>
   <div class="flex ml-2 text-sm newpath w-full flex-col items-center justify-center">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-base mx-2 my-2 py-3 px-5 rounded focus:outline-none focus:shadow-outline">Add Items/Paths</button>
+    <button class="button">Add Items/Paths</button>
+  </div>
+  <div class="flex ml-2 text-sm new-recipe w-full flex-col items-center justify-center">
+    <button class="button">Add Recipe</button>
   </div>
   <div class= "flex ml-2 text-sm refreshpage w-full flex-col items-center justify-center">
 <!-- Add in button for returning to home here -->
@@ -64,7 +82,7 @@
     <!-- Use this for insert adjacent html -->
     <fieldset class="recipe-options flex-col items-center text-left"> 
       <legend class="text-lg font-bold p-2">Choose your recipes:</legend>
-      <div id = "recipe-options">
+      <div id = "recipe-options" class="recipe-options">
         <!-- Space for inserting items from recipe lists  -->
       </div>
 
