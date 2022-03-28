@@ -171,17 +171,14 @@ for (var i = 0; i < recipesJson.length; i++) {
 
 //Add in recipes now
 
-  // Build the URL for our items API
-
-  
-  
-
-
-
-
-
 
 // End of space for adding recipes
+
+
+
+
+
+
 
 //Look for the search bar here
 let searchBar = document.querySelector(`#searchBar`)
@@ -189,29 +186,65 @@ let searchBar = document.querySelector(`#searchBar`)
 //Listen for event with search bar
 searchBar.addEventListener('keyup', function(event){
 
+ 
+
   let searchContent = event.target.value.toLowerCase()
+
+   //This does it for items
   //get the full list of items from the sections
   let itemListMaster = document.querySelector("#item-options");
+
   //get specific items by accessing the label
   let itemListNew = itemListMaster.getElementsByTagName("label")
   //get the full section that is posted so eventually it can be removed
   let itemListCore = itemListMaster.getElementsByTagName("div")
-
   //Loop through all the items
   for (i = 0; i < itemListNew.length; i++){
   //Look at the item name to see if it matches the search
   a = itemListNew[i].innerHTML
+  a = a.toLowerCase()
 
   txtValue = a.textContent || a.innerText
 
   if (a.indexOf(searchContent)== -1)  {itemListCore[i].style.display = "none"} else {itemListCore[i].style.display =""}
   }
-  //   //Hide those that don't match the search criteria (with lower case)
-  // }
+
+  //Now let's replicate for recipes
+
+  //get the full list of items from the sections
+  let recipeListMaster = document.querySelector("#recipe-options");
+  
+  //get specific items by accessing the label
+  let recipeListNew = recipeListMaster.getElementsByTagName("input")
+
+  //get the full section that is posted so eventually it can be removed
+  let recipeListCore = recipeListMaster.getElementsByTagName("div")
+
+  //Loop through all the items
+  for (i = 0; i < recipeListNew.length; i++){
+  //Look at the item name to see if it matches the search
+  a = recipeListNew[i].getAttribute("value")
+  
+  //Recipes may have caps so put to lower case to facillitate match
+  a = a.toLowerCase()
+  txtValue = a.textContent || a.innerText
+
+  if (a.indexOf(searchContent)== -1)  {recipeListCore[i].style.display = "none"} else {recipeListCore[i].style.display =""}
+   }
+  
   
 })
 
 
+
+let newRecipeButton = document.querySelector(`.new-recipe`)
+
+//Handle if they click on the new roads button, taking them to the page to add
+newRecipeButton.addEventListener(`click`, function(event) {
+
+  document.location.href = `postRecipes.html`
+
+})
 
 let newpathButton = document.querySelector(`.newpath`)
 
@@ -226,8 +259,6 @@ newpathButton.addEventListener(`click`, function(event) {
 // Set submit button as an object
 let submitButton = document.querySelector(`#list-button`)
 
-//
-
 // Listen for the click, take all the items, send them to Categories.js, get back the list of categories, remove duplicates and proceed
 submitButton.addEventListener(`click`, async function(event) {
   // ignore the default behavior
@@ -236,42 +267,17 @@ submitButton.addEventListener(`click`, async function(event) {
   //Process information input into array
 
  
-  
-
-
-
-
-
-
-
-
-
-
-
   //Look for what is checked
-  //var mainNode = document.querySelectorAll(`.item-options`)
-  //console.log(mainNode)
+ 
   var itemCheckboxes = document.querySelectorAll(`input.item-checkbox:checked`)
   console.log(itemCheckboxes)
   var recipeCheckboxes = document.querySelectorAll(`input.recipe-checkbox:checked`)
   console.log(recipeCheckboxes)
-  //var itemCheckboxes = checkboxes.querySelectorAll(`.item-options`)
+ 
   //console.log(itemCheckboxes)
 
   //For recipe Checkboxes need to send those selected to an API that returns all those items that are included in that recipe
 
-
-
-
-
-
-
-
-
-
-
-
-  
    //Setup blank arrays
   var itemArray = []
   var recipeArray = []
@@ -357,12 +363,17 @@ for (let i=0;i<json.length; i++) {
 }
 
 var destinations = categoriesList;
-var order = "<br>";
+var order = "";
 //Establish start point
 var startPoint = "start";
 //Blank for path
 var path = [];
 var counter = 1;
+
+
+let outputdiv = document.querySelector(`.output`)
+  
+outputdiv.insertAdjacentHTML(`beforeend`,`Here is your smart shopping path:`)
 
 while ( destinations.length > 0){
 //For each item on the list, set a minimum distance that is quite high so you can try to beat it
@@ -370,6 +381,8 @@ while ( destinations.length > 0){
 	var ClosestItem;
   var ClosestPath;
   
+  
+
   //This sub loop checks all for the closest and constantly updates
 	for(i=0 ; i<destinations.length ; i++){
 		
@@ -392,32 +405,41 @@ while ( destinations.length > 0){
 	// Update the start point to be the item you chose to go to and repeat the next step
 	startPoint = ClosestItem;
   console.log(startPoint)
-	//adding to the path
+	//adding the number and the next category to the path plus open brackets for th items
 	order +=  `<strong> ${counter}) `+ startPoint +`</strong> (`;
   //" (via " + ClosestPath +") <br>"
   // path += "(via" + ClosestPath;
-	//deleteing the item from the array so you don't check it again
-	var index = destinations.indexOf(ClosestItem);
-  counter += 1;
 
-  //Check which items are being hit
+	
+
+  //Check which items are being hit by that category
   for (j=0; j<itemsJson.length;j++){
     //If the category matches the destination
 
     //This is working now just need it to splice the list (not necessary for now) and add the items in parentheses so it's category (item, item)-> category (item, item)
     if (itemsJson[j].category==ClosestItem){
-      //console.log(itemsJson[j].item)
-      //console.log(itemsJson[j].category)
       order += itemsJson[j].item + ", "
     }
   }
   order = order.slice(0, -2)
-  order += ") <br>"
+  //Add close brackets and line break when done
+  order += ")"
+
+  //deleteing the item from the array so you don't check it again
+	var index = destinations.indexOf(ClosestItem);
+  counter += 1;
 
 	if (index > -1) {
    		destinations.splice(index, 1);
 	}
 	//console.log(items);
+
+  //Push the next line to order 
+  outputdiv.insertAdjacentHTML(`beforeend`,`<div class="output-list">
+  <input type="checkbox" class="output-checkbox" value="${ClosestItem}"> 
+  <label>${order}</label></div>`)
+  //Then reset it
+  order = ""
 
 }
 //This is the final output
@@ -432,9 +454,9 @@ while ( destinations.length > 0){
     
   formdiv.innerHTML = `<div> </div>`
 
-  let outputdiv = document.querySelector(`.output`)
 
-  outputdiv.insertAdjacentHTML(`beforeend`,`Here is your smart shopping path: ${order} <br>`)
+  //Drop back here if issues
+  
 })
 
 let refreshButton = document.querySelector(`.refreshpage`)
@@ -444,6 +466,27 @@ refreshButton.addEventListener(`click`, function(event) {
   location.reload()
 
 })
+
+document.body.addEventListener('click',function(event) {
+  console.log("hello")
+  
+  //Find the selected checkboxes
+  let selectedCheckboxes = document.querySelectorAll(".output input[type=checkbox]:checked")
+
+  selectedCheckboxes.forEach(function(item) {
+    item.parentElement.style.display = "none";
+  })
+
+  let outputdiv = document.querySelector(`.output`)
+
+  let outputContent = outputdiv.innerHTML
+  console.log(outputContent.length)
+})
+
+outputdiv.insertAdjacentHTML(`beforeend`,`<div class="output-list">
+  <input type="checkbox" class="output-checkbox" value="${ClosestItem}"> 
+  <label>${order}</label></div>`)
+
 // Listen for the submit button click
 
 //Prevent default behaviour
