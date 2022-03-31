@@ -117,76 +117,63 @@ function Dijkstra(roads, source, dest) {
 
 //Listen for page loading event, eventually change this to take an input of what store in the URL and listen for a click
 window.addEventListener('DOMContentLoaded', async function() { 
+  
   // Build the URL for our items API
-let url = `/.netlify/functions/items`
+  let url = `/.netlify/functions/items`
 
-// Fetch the url, wait for a response, store the response in memory
-let response = await fetch(url)
-console.log(response)
+  // Fetch the url, wait for a response, store the response in memory
+  let response = await fetch(url)
+  console.log(response)
 
-// Ask for the json-formatted data from the response, wait for the data, store it in memory
-let itemsJson = await response.json()
+  // Ask for the json-formatted data from the response, wait for the data, store it in memory
+  let itemsJson = await response.json()
 
-//Establish reference to 
-let itemsFormDiv = document.querySelector(`#item-options`)
+  //Establish reference to 
+  let itemsFormDiv = document.querySelector(`#item-options`)
 
+  //Add all the items to the page with checkbxoes
+  for (var i = 0; i < itemsJson.length; i++) {
 
+    itemsFormDiv.insertAdjacentHTML(`beforeend`,
+    `<div class="text-base font-normal px-2">
+    <input type="checkbox" class="item-checkbox" id="${itemsJson[i].item}" name="item" value="${itemsJson[i].item}"> 
+    <label>${itemsJson[i].item}</label></div>`)
+    
+    console.log(itemsJson[i])
+  }
 
+  //Now add all the recipes to the page
+  let urlRecipe = `/.netlify/functions/recipes`
 
-for (var i = 0; i < itemsJson.length; i++) {
+  // Fetch the url, wait for a response, store the response in memory
+  let responseRecipe = await fetch(urlRecipe)
+  console.log(responseRecipe)
 
-  itemsFormDiv.insertAdjacentHTML(`beforeend`,
-  `<div class="text-base font-normal px-2">
-  <input type="checkbox" class="item-checkbox" id="${itemsJson[i].item}" name="item" value="${itemsJson[i].item}"> 
-  <label>${itemsJson[i].item}</label></div>`)
-  
-  console.log(itemsJson[i])
-}
+  // Ask for the json-formatted data from the response, wait for the data, store it in memory
+  let recipesJson = await responseRecipe.json()
 
-let urlRecipe = `/.netlify/functions/recipes`
+  //Establish reference to div to post to
+  let recipesFormDiv = document.querySelector(`#recipe-options`)
 
-// Fetch the url, wait for a response, store the response in memory
-let responseRecipe = await fetch(urlRecipe)
-console.log(responseRecipe)
+  //Add list of recipes as lines in HTML
+  for (var i = 0; i < recipesJson.length; i++) {
 
-// Ask for the json-formatted data from the response, wait for the data, store it in memory
-let recipesJson = await responseRecipe.json()
-
-//Establish reference to div to post to
-let recipesFormDiv = document.querySelector(`#recipe-options`)
-
-
-for (var i = 0; i < recipesJson.length; i++) {
-
-  recipesFormDiv.insertAdjacentHTML(`beforeend`,
-  `<div class="text-base font-normal px-2">
-  <input type="checkbox" class="recipe-checkbox" id="${recipesJson[i].recipeName}" name="item" value="${recipesJson[i].recipeName}"> 
-  <label>${recipesJson[i].recipeDisplay}</label>
-  </div>`)
-  
-  console.log(recipesJson[i])
-}
+    recipesFormDiv.insertAdjacentHTML(`beforeend`,
+    `<div class="text-base font-normal px-2">
+    <input type="checkbox" class="recipe-checkbox" id="${recipesJson[i].recipeName}" name="item" value="${recipesJson[i].recipeName}"> 
+    <label>${recipesJson[i].recipeDisplay}</label>
+    </div>`)
+    
+    console.log(recipesJson[i])
+  }
 
 })
-
-//Add in recipes now
-
-
-// End of space for adding recipes
-
-
-
-
-
-
 
 //Look for the search bar here
 let searchBar = document.querySelector(`#searchBar`)
 
 //Listen for event with search bar
 searchBar.addEventListener('keyup', function(event){
-
- 
 
   let searchContent = event.target.value.toLowerCase()
 
@@ -236,7 +223,6 @@ searchBar.addEventListener('keyup', function(event){
 })
 
 
-
 let newRecipeButton = document.querySelector(`.new-recipe`)
 
 //Handle if they click on the new roads button, taking them to the page to add
@@ -246,7 +232,7 @@ newRecipeButton.addEventListener(`click`, function(event) {
 
 })
 
-let newpathButton = document.querySelector(`.newpath`)
+let newpathButton = document.querySelector(`.new-path`)
 
 //Handle if they click on the new roads button, taking them to the page to add
 newpathButton.addEventListener(`click`, function(event) {
@@ -266,7 +252,6 @@ submitButton.addEventListener(`click`, async function(event) {
 
   //Process information input into array
 
- 
   //Look for what is checked
  
   var itemCheckboxes = document.querySelectorAll(`input.item-checkbox:checked`)
@@ -289,25 +274,27 @@ submitButton.addEventListener(`click`, async function(event) {
 
   //Build the URL and check it
   let recUrl = `/.netlify/functions/recipeItems?recipes=${recipeArray}`
-  console.log(recUrl)
+
 
   //Get the json response of items from the URL 
-  let recipesItemsResponse = await fetch(recUrl)
-  let recipesItemsJson = await recipesItemsResponse.json()
-  console.log(`check`)
-  console.log(recipesItemsJson)
-  console.log('check2')
-  console.log(recipesItemsJson[0])
+  if (recipeArray.length>0) {
+    let recipesItemsResponse = await fetch(recUrl)
+    let recipesItemsJson = await recipesItemsResponse.json()
 
-  for (var k = 0; k < recipesItemsJson.length; k++) {
-    itemArray.push(recipesItemsJson[k])
+    for (var k = 0; k < recipesItemsJson.length; k++) {
+      itemArray.push(recipesItemsJson[k])
+    }
   }
 
+  //Push all recipe items into array
+  
 
-  //Push all those where checked into an array
+
+  //Push all items  checked into array
   for (var i = 0; i < itemCheckboxes.length; i++) {
     itemArray.push(itemCheckboxes[i].value)
   }
+
   //Build the Url for our API for getting categories
   let catUrl = `/.netlify/functions/categories?items=${itemArray}`  
   //This looks good, console.log(`this is array ${itemArray}`)
@@ -370,10 +357,13 @@ var startPoint = "start";
 var path = [];
 var counter = 1;
 
-
 let outputdiv = document.querySelector(`.output`)
   
 outputdiv.insertAdjacentHTML(`beforeend`,`Here is your smart shopping path:`)
+
+console.log(`roads`)
+
+console.log(roads)
 
 while ( destinations.length > 0){
 //For each item on the list, set a minimum distance that is quite high so you can try to beat it
@@ -386,12 +376,13 @@ while ( destinations.length > 0){
   //This sub loop checks all for the closest and constantly updates
 	for(i=0 ; i<destinations.length ; i++){
 		
+    //Put in roads, start and target and get the minimum distance between those categories and the path out
     var values = Dijkstra(roads, startPoint, destinations[i]);
-  
     var DijkstraDistance = values[0];
     var DijsktraPath = values[1];
     //console.log(values);
 
+    //If this item is closer than the current minimum, then replace it until you have a winner
 		if(DijkstraDistance < minDist){
 			minDist = DijkstraDistance;
       //console.log(minDist);
@@ -410,8 +401,6 @@ while ( destinations.length > 0){
   //" (via " + ClosestPath +") <br>"
   // path += "(via" + ClosestPath;
 
-	
-
   //Check which items are being hit by that category
   for (j=0; j<itemsJson.length;j++){
     //If the category matches the destination
@@ -425,7 +414,7 @@ while ( destinations.length > 0){
   //Add close brackets and line break when done
   order += ")"
 
-  //deleteing the item from the array so you don't check it again
+  //deleteing the category from the array so you don't check it again
 	var index = destinations.indexOf(ClosestItem);
   counter += 1;
 
@@ -438,28 +427,44 @@ while ( destinations.length > 0){
   outputdiv.insertAdjacentHTML(`beforeend`,`<div class="output-list">
   <input type="checkbox" class="output-checkbox" value="${ClosestItem}"> 
   <label>${order}</label></div>`)
+  console.log(`The order line is ${order}`)
   //Then reset it
   order = ""
+
+  
+  // //Find the output div and send closest item row to it in HTML 
+  // let outputdiv = document.querySelector(`.output`)
+
+  // let outputContent = outputdiv.innerHTML
+  // console.log(outputContent.length)
+  
+  // outputdiv.insertAdjacentHTML(`beforeend`,`<div class="output-list">
+  //   <input type="checkbox" class="output-checkbox" value="${ClosestItem}"> 
+  //   <label>${order}</label></div>`)
 
 }
 //This is the final output
 //console.log(order)
 //console.log(path)
 
-  let refreshdiv = document.querySelector(`.refreshpage`)
+//This adds a button to refresh the page once options have been submitted
+  let refreshdiv = document.querySelector(`.refresh-page`)
 
-  refreshdiv.insertAdjacentHTML(`beforeend`,`<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-base mx-2 my-2 py-3 px-5 rounded focus:outline-none focus:shadow-outline">Return to Home</button>`)
+  refreshdiv.insertAdjacentHTML(`beforeend`,`<button class="button">Return to Home</button>`)
 
-  let formdiv = document.querySelector(`.list-form`)
-    
-  formdiv.innerHTML = `<div> </div>`
+  let formdiv = document.querySelectorAll(`.to-clear`)
+
+  formdiv.forEach(function(item) {
+    item.innerHTML = "";
+  })
+  //formdiv.innerHTML = `<div> </div>`
 
 
   //Drop back here if issues
   
 })
 
-let refreshButton = document.querySelector(`.refreshpage`)
+let refreshButton = document.querySelector(`.refresh-page`)
 
 refreshButton.addEventListener(`click`, function(event) {
 
@@ -467,6 +472,7 @@ refreshButton.addEventListener(`click`, function(event) {
 
 })
 
+//Remove checkbox items in the output area when they are checked so people can tick sections that are done
 document.body.addEventListener('click',function(event) {
   console.log("hello")
   
@@ -477,15 +483,10 @@ document.body.addEventListener('click',function(event) {
     item.parentElement.style.display = "none";
   })
 
-  let outputdiv = document.querySelector(`.output`)
 
-  let outputContent = outputdiv.innerHTML
-  console.log(outputContent.length)
 })
 
-outputdiv.insertAdjacentHTML(`beforeend`,`<div class="output-list">
-  <input type="checkbox" class="output-checkbox" value="${ClosestItem}"> 
-  <label>${order}</label></div>`)
+
 
 // Listen for the submit button click
 
