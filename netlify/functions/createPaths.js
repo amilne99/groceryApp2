@@ -63,6 +63,34 @@ exports.handler = async function(event) {
 
     }
 
+
+
+    //Query to get roads (destination) and stores2 (source info)
+    let allRoadsQuery = await db.collection(`roads`).get()
+    let roadsQuery = await db.collection(`stores2`).get()
+
+	let roads = roadsQuery.docs
+    
+    //Get all the roads in JSON format
+    for (let i=0;i< roads.length; i++) {
+		//Get the data from the road
+        let roadData = roads[i].data()
+		let roadObject = {
+            from: roadData.from,
+            to: roadData.to,
+            distance: roadData.distance
+        }
+		
+        returnValue.push(roadObject)
+	}
+
+    //Get a list of all the categories
+    
+    //For each category item loop through all other category items
+    //If the same, skip. If different, do Djikstra's using roads
+    //Post the Category as ID, then push 2nd category and djikstra distance as other piece of info
+
+
   return {
     statusCode: 200,
     body: JSON.stringify(returnValue)
